@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 
 public class DBUtil {
 
-    private static final String URL = "jdbc:mysql://192.168.0.134:3306/queryGirl";
+    private static final String URL = "jdbc:mysql://192.168.0.100:3306/queryGirl";
     private static final String USER = "root";
     private static final String PASSWORD = "MicroKibaco0813";
     private static Connection sConn;

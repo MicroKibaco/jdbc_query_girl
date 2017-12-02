@@ -115,4 +115,22 @@ public class Goddess {
     public void setIsdel(Integer isdel) {
         this.isdel = isdel;
     }
+
+    @Override
+    public String toString() {
+        return "Goddess{" +
+                "id=" + id +
+                ", user_name='" + user_name + '\'' +
+                ", sex=" + sex +
+                ", age=" + age +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", create_user='" + create_user + '\'' +
+                ", create_date=" + create_date +
+                ", update_user='" + update_user + '\'' +
+                ", update_date=" + update_date +
+                ", isdel=" + isdel +
+                '}';
+    }
 }
