@@ -19,7 +19,7 @@ public class GoddessDao {
 
     public void addGoddess(Goddess g) throws SQLException {
 
-       Connection conn = DBUtil.getConnection();
+        Connection conn = DBUtil.getConnection();
 
         String sql="" +
                 "insert into query_girl" +
