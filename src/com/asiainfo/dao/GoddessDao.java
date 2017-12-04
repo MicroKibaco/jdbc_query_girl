@@ -8,9 +8,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MicroKibaco on 02/12/2017.
@@ -77,24 +77,44 @@ public class GoddessDao {
 
     }
 
-    public List<Goddess> queryGoddess() throws SQLException{
+    public List<Goddess> queryGoddess(List<Map<String,Object>> params) throws SQLException{
+        List<Goddess> result=new ArrayList<Goddess>();
 
-        Connection conn = DBUtil.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select user_name,age from query_girl");
+        Connection conn=DBUtil.getConnection();
+        StringBuilder sb=new StringBuilder();
+        sb.append("select * from query_girl where 1=1 ");
 
-        List<Goddess> gs = new ArrayList<>();
-        Goddess g = null;
+        if(params!=null&&params.size()>0){
+            for (int i = 0; i < params.size(); i++) {
+                Map<String, Object> map=params.get(i);
+                sb.append(" and  "+map.get("name")+" "+map.get("rela")+" "+map.get("value")+" ");
+            }
+        }
 
-        while (rs.next()){
-            g = new Goddess();
+        PreparedStatement ptmt=conn.prepareStatement(sb.toString());
+
+        System.out.println(sb.toString());
+        ResultSet rs=ptmt.executeQuery();
+
+        Goddess g=null;
+        while(rs.next()){
+            g=new Goddess();
+            g.setId(rs.getInt("id"));
             g.setUser_name(rs.getString("user_name"));
             g.setAge(rs.getInt("age"));
-            gs.add(g);
-        }
-        
-        return gs;
+            g.setSex(rs.getInt("sex"));
+            g.setBirthday(rs.getDate("birthday"));
+            g.setEmail(rs.getString("email"));
+            g.setMobile(rs.getString("mobile"));
+            g.setCreate_date(rs.getDate("create_date"));
+            g.setCreate_user(rs.getString("create_user"));
+            g.setUpdate_date(rs.getDate("update_date"));
+            g.setUpdate_user(rs.getString("update_user"));
+            g.setIsdel(rs.getInt("isdel"));
 
+            result.add(g);
+        }
+        return result;
     }
 
     public Goddess getGoddess(Integer id) throws SQLException {
