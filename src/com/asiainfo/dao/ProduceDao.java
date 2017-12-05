@@ -7,6 +7,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +63,18 @@ public class ProduceDao {
         call.execute();
         ResultSet rs = call.getResultSet();
         return result;
+
+    }
+
+    public static Integer select_count() throws SQLException {
+
+        Integer count = 0;
+        Connection conn = DBUtil.getConnection();
+        CallableStatement call = conn.prepareCall("call sp_select_count(?)");
+        call.registerOutParameter(1, Types.INTEGER);
+        call.execute();
+        count = call.getInt(1);
+        return count;
 
     }
 
